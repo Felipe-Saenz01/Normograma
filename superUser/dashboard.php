@@ -71,7 +71,7 @@ foreach($Clasi as $a){
 $consultaClasificacion = "SELECT count(nombre_clasificacion) FROM v_normativas WHERE nombre_clasificacion ";
 $contador = "count(nombre_clasificacion)";
 
-$datosGraficaClasificaciones = obtenerDatos($nombresClasificaciones, $consultaClasificacion, $contador, $totalNormativas);
+$DatosGraficaClasificaciones = obtenerDatos($nombresClasificaciones, $consultaClasificacion, $contador, $totalNormativas);
 
 
 
@@ -169,10 +169,10 @@ input[type="number"] {
 
 
 
-<script src="../code/highcharts.js"></script>
+<!-- <script src="../code/highcharts.js"></script>
 <script src="../code/modules/exporting.js"></script>
 <script src="../code/modules/export-data.js"></script>
-<script src="../code/modules/accessibility.js"></script>
+<script src="../code/modules/accessibility.js"></script> -->
 </head>
 
 <body >
@@ -225,7 +225,8 @@ input[type="number"] {
 </header>
 
 <!--graficas-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 
 <!--Boostrap5-->
@@ -589,7 +590,7 @@ Highcharts.chart('containerClasificacion', {
     series: [{
         name: 'Dependencia',
         colorByPoint: true,
-	data: [<?php echo $datosGraficaClasificaciones; ?>]
+	data: [<?php echo $DatosGraficaClasificaciones; ?>]
     }]
 });
 </script>
@@ -674,7 +675,7 @@ Highcharts.chart('containerEstados', {
 
 
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
+
 
 <footer class="bg-light text-center text-lg-start ">
   <div class="text-center p-2 mb-0 mt-4 text-light" style="background-color: black;">
