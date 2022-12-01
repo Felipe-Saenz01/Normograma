@@ -1,0 +1,34 @@
+.pagitator ul{
+    padding: 15px;
+    list-style: none; 
+    background: #fff;
+    margin-top: 15px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagitator a, .pageSelected{
+    color: black;
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+    width: 35px;
+}
+
+.pagitator a:hover{
+    background: #037207;
+    color: #fff;
+}
+
+.pageSelected{
+    color: #fff;
+    background: #037207;
+    border: 1px solid #037207;
+}
+
