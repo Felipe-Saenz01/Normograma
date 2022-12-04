@@ -24,14 +24,35 @@
 
 
 
-    <section class="vh-100">
+<section class="vh-100">
   <div class="container-fluid h-custom align-items-center">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-2 col-lg-6 col-xl-7">
-        <img src="imgl/Bige3.png"
-          class="img-fluid" alt="Sample image">
-      </div>
-      
+      <div class="col-md-2 col-lg-6 col-lg-7">
+
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="img/image-1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/image-2.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/image-3.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+</div>
+
       <div class="col-lg-5 bg-dark d-flex flex-column align-items-end min-vh-100">
         <div class="align-self-center w-100 px-lg-5 py-lg-4 p-4">   
             <img src="imgl/logoUni2.png" class="img-fluid" />
