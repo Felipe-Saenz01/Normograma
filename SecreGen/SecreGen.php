@@ -93,7 +93,7 @@
 	    $pag = 1;
 	}
     
-	$limit = 5;
+	$limit = 10;
 	$offset=($pag-1)*$limit;
 
 	$sentencia = $db->query("SELECT Nom.directorio, Nom.codigo_gen, Nom.numero_norma, Nom.anio_expedicion, Nom.mes_expedicion, Nom.dia_expedicion, Nom.asunto, Nom.fecha_cargue,
