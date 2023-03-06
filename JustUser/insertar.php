@@ -35,7 +35,7 @@ if($_FILES['archivo_norma']['error']>0){
     echo 'Error al guardar el archivo';
 }else{
     $archivos_permitidos= array("application/pdf");
-    $tamMax=200;
+    $tamMax=20000;
     
     if(in_array($_FILES['archivo_norma']['type'], $archivos_permitidos) && $_FILES['archivo_norma']['size'] <= $tamMax*1024){
 

@@ -147,6 +147,18 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
+<style>
+	.linkFooter{
+	color: #778a9e;
+	text-decoration: none;
+}
+
+.linkFooter:hover{
+	text-decoration: none;
+	color: #fb7c3c;
+}
+</style>
+
 <body >
 
 <header>
@@ -656,22 +668,9 @@
 </div>
 
 
-	<footer class="bg-light text-center text-lg-start ">
-  <div class="text-center p-2 mb-0 mt-4 text-light" style="background-color: black;">
-    <em>Universidad sujeta a inspección y vigilancia por el Ministerio de Educación Nacional.</em>
-    <br>
-    <br>
-    <p style="font-size: 12px;">
-    Yopal, Casanare Carrera 19 No. 39-40 - Atención al Ciudadano 3213983917 - Bienestar Universitario 3213986406
-    <a href="https://unitropico.edu.co/index.php/unitropico/contactanos" style="font-size: 12px;">Líneas de Contacto</a>
-    </p>
-    <p style="font-size: 12px;">Ventanilla Única vur@unitropico.edu.co - notificacionesjudiciales@unitropico.edu.co</p>
-    <p style="font-size: 12px;">Derechos Reservados - Unitrópico - Copyright © 2019</p>
-    <p style="font-size: 10px;">
- 		<span>Designed by </span>
-    <a href="https://www.unitropico.edu.co" style="font-size: 12px;">Sistemas de Información.</a> 		
-  </div>
-</footer>
+<?php
+	include '../Models/footer.php'
+?>
 
 <?php $db=null; ?>
 
