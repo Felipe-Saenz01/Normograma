@@ -2,6 +2,7 @@
 
 
     include '../../Models/conexion.php';
+	
     $sentencia = $db->query("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
     $normativa = $sentencia ->fetchAll(PDO::FETCH_OBJ);
 
@@ -36,7 +37,7 @@
       }
 
     session_start();
-
+	
     if(!isset($_SESSION['rol'])){
       header('location: ../../Login.php');
     }else{
@@ -44,6 +45,7 @@
             header('location: ../../Login.php');
         }
     }
+	include './userInfo.php';
 
 ?>
 
@@ -116,6 +118,7 @@
 		  	Sesión
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <li><a class="dropdown-item" type="button"data-bs-toggle="modal" data-bs-target="#userInfo" >Cambiar Contraseña</a></li>
 		 	<li><a class="dropdown-item" href="../salir.php">Cerrar sesión</a></li>
             <li><a class="dropdown-item" href="../salir2.php">Salir</a></li>
           </ul>

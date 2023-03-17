@@ -46,6 +46,8 @@
         }
     }
 
+	include './userInfo.php';
+
 ?>
 
 
@@ -115,6 +117,7 @@
 		  	Sesión
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <li><a class="dropdown-item" type="button"data-bs-toggle="modal" data-bs-target="#userInfo" >Cambiar Contraseña</a></li>
 		  	<li><a class="dropdown-item" href="../salir.php">Cerrar sesión</a></li>
             <li><a class="dropdown-item" href="../salir2.php">Salir</a></li>
 

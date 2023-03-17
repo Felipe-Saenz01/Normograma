@@ -157,8 +157,7 @@ function sentenciaParametros($dependencia, $clasificacion, $estado, $anio){
 	INNER JOIN clasificacion_normativa Clasno ON Nom.codigo_clasificacion_normograma = Clasno.codigo
 	INNER JOIN estado_documento Estdoc ON Nom.estado = Estdoc.codigo
 	INNER JOIN quien_emite_normativa NomEmi ON Nom.codigo_quien_emite_normativa = NomEmi.codigo
-  INNER JOIN dependencia_normativa Depen ON Nom.codigo_dependencia_normativa = Depen.codigo ";
-  $queryOrigen= $query;
+  	INNER JOIN dependencia_normativa Depen ON Nom.codigo_dependencia_normativa = Depen.codigo ";
 	//se enviaron palabas claves
 	if(!empty($_SESSION['palabrasClaves'])){
 		$aKeyword = explode(", ", $_SESSION['palabrasClaves']);
