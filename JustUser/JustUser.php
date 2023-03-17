@@ -123,6 +123,8 @@
         }
     }
 
+	include './userInfo.php';
+
     function limitarAsunto ($asunto, $limite, $sufijo){
 	if(strlen($asunto)>$limite){
 	    return substr($asunto,0,$limite).$sufijo;
@@ -184,6 +186,7 @@
 	<li class="nav-item dropdown">
 	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sesión</a>
 	    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<li><a class="dropdown-item" type="button"data-bs-toggle="modal" data-bs-target="#userInfo" >Cambiar Contraseña</a></li>
 			<li><a class="dropdown-item" href="salir.php">Cerrar sesión</a></li>
             <li><a class="dropdown-item" href="salir2.php">Salir</a></li>
 	    </ul>

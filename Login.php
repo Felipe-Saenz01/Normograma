@@ -85,6 +85,25 @@
         <?php
         include 'Models/conexion.php';
 
+        if(isset($_GET['alertUserUpdate'])){
+          if($_GET['alertUserUpdate'] == 2){
+            echo"<script>
+            Swal.fire({
+              title: 'Actualizado',
+              text:'Se ha actualizado la contraseña, ingrese de nuevo.',
+              icon: 'success',
+              confirmButtonColor: '#037207',
+              confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+              window.location.href = 'Login.php';
+                }
+            })	
+            </script>";
+          }
+
+        }
+
         session_start();
 
         if(isset($_SESSION['rol'])){
@@ -123,7 +142,7 @@
           if(is_array($row)){
 
             $tipo = password_verify($password, $row['clave']);
-
+            
             if(password_verify($password, $row['clave'])){
                 $rol = $row['tipo_de_usuario'];
                 $estade = $row['estado'];
@@ -131,6 +150,7 @@
                 if($estade != 2){
                   $_SESSION['rol'] = $rol;
                   $_SESSION['usuarioname'] = $nombrer;
+                  $_SESSION['id']= $row['codigo_Us'];
                     switch($rol){
                       case 1:
                         header('location: superUser/dashboard.php');

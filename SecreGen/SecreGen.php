@@ -1,7 +1,8 @@
 <?php
 
 
-    include '../Models/conexion.php';
+  include '../Models/conexion.php';
+  
 
     /* 
     * Se utilizará un condicionamiento para manejar el insertar normativas y editarlas en el mismo Formulario
@@ -123,6 +124,9 @@
         }
     }
 
+	include './userInfo.php';
+	
+
     function limitarAsunto ($asunto, $limite, $sufijo){
 	if(strlen($asunto)>$limite){
 	    return substr($asunto,0,$limite).$sufijo;
@@ -145,6 +149,7 @@
         <link rel="icon" href="../img/favicon.ico">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 
 <style>
@@ -195,8 +200,9 @@
 	<li class="nav-item dropdown">
 	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sesión</a>
 	    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<li><a class="dropdown-item" type="button"data-bs-toggle="modal" data-bs-target="#userInfo" >Cambiar Contraseña</a></li>
 			<li><a class="dropdown-item" href="salir.php">Cerrar sesión</a></li>
-            <li><a class="dropdown-item" href="salir2.php">Salir</a></li>
+      <li><a class="dropdown-item" href="salir2.php">Salir</a></li>
 	    </ul>
         </li>
 
