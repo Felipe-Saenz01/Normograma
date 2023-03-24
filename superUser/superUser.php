@@ -371,364 +371,347 @@
 ?>
 <div class="container-fluid">
     <div class="col-12">
-	<div class="row">
-	    <div class="col-12 grid-margin">
-		<div class="card">
-		    <div class="card-body">
-			<h4 class="card-title">Filtro Normativas 
-			    <button style="background-color: white;" type="button" class="btn btn-light" data-bs-toggle="tooltip" data-bs-placement="top" title="En este apartado se podrán filtrar normativas según los parámetros seleccionados.">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
-				    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-				    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-				</svg>
-			    </button>
-			</h4>
-			
-			<form class="form-horizontal" method="GET" action="superUserBusqueda.php">
-			    <div class="col-11 form-group">
-				<table class="table">
-				    <thead>
-					<tr class="filters">
-					    <th>
-						<label class="form-control-sm"><b>Tipo Documento</b></label>
-						<select class="form-control mt-2" name="tipoDoc">
-						    <option value="">- Seleccione Clasificación -</option>
-						    <?php
-						    $busqeda = $db->query("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
-						    $dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
-						    foreach($dependencia as $datos){
-						    ?>
-						    <option value="<?php echo $datos->codigo;?>" ><?php echo $datos->nombre_clasificacion;?></option>
-						    <?php
-						    }
-						    ?>  
-						</select>	
-					    </th>
-					    <th>
-						<label class="form-control-sm"><b>Año de Expedición</b></label>
-						<input class="form-control form-control-sm" type="number" max="2030" min="1900" name="anio_expedicion" placeholder="Digite el año de expedición." >
-					    </th>
+		<div class="row">
+			<div class="col-12 grid-margin">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Filtro Normativas 
+							<button style="background-color: white;" type="button" class="btn btn-light" data-bs-toggle="tooltip" data-bs-placement="top" title="En este apartado se podrán filtrar normativas según los parámetros seleccionados.">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+								<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+								<path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+							</svg>
+							</button>
+						</h4>
+						
+						<form class="form-horizontal" method="GET" action="superUserBusqueda.php">
+							<div class="col-11 form-group">
+								<table class="table">
+									<thead>
+										<tr class="filters">
+											<th>
+												<label class="form-control-sm"><b>Tipo Documento</b></label>
+												<select class="form-control mt-2" name="tipoDoc">
+													<option value="">- Seleccione Clasificación -</option>
+													<?php
+													$busqeda = $db->query("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
+													$dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
+													foreach($dependencia as $datos){
+													?>
+													<option value="<?php echo $datos->codigo;?>" ><?php echo $datos->nombre_clasificacion;?></option>
+													<?php
+													}
+													?>  
+												</select>	
+											</th>
+											<th>
+												<label class="form-control-sm"><b>Año de Expedición</b></label>
+												<input class="form-control form-control-sm" type="number" max="2030" min="1900" name="anio_expedicion" placeholder="Digite el año de expedición." >
+											</th>
 
-					    <th>
-						<label class="form-control-sm"><b>Número de Normativa</b></label>
-						<input class="form-control form-control-sm" type="number" max="100000" min="0" name="numero_norma" placeholder="Digite el número de la norma." >
-					    </th>
-					    <th>
-						<input class="btn btn-sm btn-success" type="submit" value="Buscar" style="background-color:#037207;" >
-					    </th>
-					</tr>
-				    </thead>
-				</table>
-			    </div>
-			</form>
-		    </div>
+											<th>
+												<label class="form-control-sm"><b>Número de Normativa</b></label>
+												<input class="form-control form-control-sm" type="number" max="100000" min="0" name="numero_norma" placeholder="Digite el número de la norma." >
+											</th>
+											<th>
+												<input class="btn btn-sm btn-success" type="submit" value="Buscar" style="background-color:#037207;" >
+											</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-	    </div>
-	</div>
     </div>
 </div>
 
-<div class="container-fluid " >
-    <div class="row">
-	<div class="table-responsive col-md-8">
-	    <h3>Lista Normativa <button style="background-color: white;" type="button" class="btn btn-light" 
-		data-bs-toggle="tooltip" data-bs-placement="top" 
-		title="La tabla contiene la lista de normativas institucionales"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
-			<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-			<path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-		</svg></button></h3>
-
-<div class="table-responsive-xxl">
-
-<table class="table">
-	    <thead>
-			<tr style="background-color:#037207; color:#FFFFFF;">
-
-				<th style=" text-align: center;">Tipo Documento</th>
-				<th style=" text-align: center;">Núm. Norma</th>
-				<th style=" text-align: center;">Fecha Expedición</th>
-
-				<th style=" text-align: center;">Asunto</th>
-				<th style=" text-align: center;">Estado</th>
-				<th style=" text-align: center;">Ver</th>
-				<th style=" text-align: center;">Editar</th>
-				<th style=" text-align: center;">Eliminar</th>
-			</tr>   
-		</thead>
-	    
-		<tbody>
-	    <?php
-		foreach($normativa as $datos){
-	    ?>
-			<tr>
-
-				<td style=" text-align: center;"><?php echo $datos->nombre_clasificacion; ?></td>
-				<td style=" text-align: center;"><?php echo $datos->numero_norma; ?></td>
-				<td style=" text-align: center;"><?php echo $datos->dia_expedicion."/".$datos->mes_expedicion."/".$datos->anio_expedicion; ?></td>
-
-				<td style=" text-align: justify;"><p><?php echo limitarAsunto($datos->asunto,170,'...'); ?></p></td>
-				<td style=" text-align: center;"><?php echo $datos->nombre_estado; ?></td>
-				<!-- Elemento/Boton de Ver Documento   ------>
-				<td style="text-align: center;"><a class='btn btn-info' href="verDocumento.php?id=<?php echo $datos->codigo_gen; ?>" title='Ver archivo adjunto' target="_BLANK" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
-				    <path d="M23.821,11.181v0C22.943,9.261,19.5,3,12,3S1.057,9.261.179,11.181a1.969,1.969,0,0,0,0,1.64C1.057,14.739,4.5,21,12,21s10.943-6.261,11.821-8.181A1.968,1.968,0,0,0,23.821,11.181ZM12,19c-6.307,0-9.25-5.366-10-6.989C2.75,10.366,5.693,5,12,5c6.292,0,9.236,5.343,10,7C21.236,13.657,18.292,19,12,19Z"/>
-				    <path d="M12,7a5,5,0,1,0,5,5A5.006,5.006,0,0,0,12,7Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z"/></svg></a></td>
-				<!-- Elemento/Boton de Editar normativa ----->
-				<td style="text-align: center;"><a class="btn btn-warning" href="superUser.php?id=<?php echo $datos->codigo_gen; ?>" title="Editar Normativa"  ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-				    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-				    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg></a>
-				</td>
-				<!-- Elemento/Boton de Eliminar normativa --->
-				<td style="text-align: center;"><a class="btn btn-danger" onclick="AlertEl(<?php echo $datos->codigo_gen; ?>)" title="Eliminar Normativa"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-				    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg></a>
-				</td>
-			</tr> 
-
-
-		</tbody>
-	    <?php
-    		}
-	    ?>
-	    </table>
-
-</div>
-
-
-	<nav aria-label="Paginación Normativas">
-	    <ul class="pagination justify-content-center">
-	    <?php
-	    $totalPaginacion = ceil($totalNormas/$limit);
-		//numero de botones de la paginacion a mostrar
-		$num_pages = 5;
-		// calcular mitad del número de páginas que se van a mostrar
-		$half_num_pages = floor($num_pages / 2);
-		// Calculamos el primer y último número de página que se van a mostrar
-		if ($pag - $half_num_pages > 0) {
-			$start_page = $pag - $half_num_pages;
-		} else {
-			$start_page = 1;
-		}
-		  
-		if ($pag + $half_num_pages < $totalPaginacion) {
-			$end_page = $pag + $half_num_pages;
-		} else {
-			$end_page = $totalPaginacion;
-		}
-		// Imprimimos el botón de "Anterior" si no estamos en la primera página
-		if ($pag > 1) {
-			echo "
-			<li class='page-item' aria-current='page'>
-				<a class='page-link text-success' href='superUser.php?pag= $i'>
-				<span aria-hidden='true'>&laquo;</span>
-				</a>
-			</li>";
-			//echo '<a href="?page='.($current_page-1).'">&laquo; Anterior</a> ';
- 		}
-		// Imprimimos los botones de página
-		for ($i = $start_page; $i <= $end_page; $i++) {
-			// Imprimimos el número de página actual en negrita
-			if ($i == $pag) {
-			echo "
-			<li class='page-item active' aria-current='page'>
-				<a class='page-link text-success'href='superUser.php?pag=$i'>$i</a>
-			</li>";
-			} else {
-			echo "
-			<li class='page-item' aria-current='page'>
-				<a class='page-link text-success' href='superUser.php?pag=$i'>$i</a>	
-			</li>";
-			echo '<a href="?page='.$i.'">'.$i.'</a> ';
-			}
-		}
-
-		// Imprimimos el botón de "Siguiente" si no estamos en la última página
-		if ($pag < $totalPaginacion) {
-			echo "
-			<li class='page-item' aria-current='page'>
-				<a class='page-link text-success' href='superUser.php?pag= $pag+1'>
-				<span aria-hidden='true'>&laquo;</span>
-				</a>
-			</li>";
-		}
-
-	    ?>
-	    </ul>
-	</nav>
-
-</div>
-
-<!---Formulario ingreso de datos ----------------------------------------------->
-
-<div class="col-md-3 shadow"> <!--- Condicionamiento para titulo con la variable de condicion-->
-        <hr><h4><?php if($condicion==1){ ?>Ingreso Nueva Normativa<?php }else{ ?> Editar Normativa <?php } ?></h4><hr>
-
-    <form class="form-inline" method="POST" action="<?php if($condicion==1){ ?>insertar.php<?php }else{ ?>editarProceso.php<?php } ?>" enctype="multipart/form-data" >
-
-<!--------- Lista desplegable dependencia_normativa  ---------------------------->
-
-    <div class="form-group "> 
-	<label class="form-control-sm">Dependencia</label>
-	<select class="form-control mt-2" name="codigo_dependencia_normativa" required>
-	    <option value="">- Seleccione Dependencia -</option>
-	    <?php
-	    $busqeda = $db->query("SELECT * FROM dependencia_normativa ORDER BY nombre_dependencia ASC");
-	    $dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
-	    foreach($dependencia as $datos){
-	    ?>
-	    <option  value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_dependencia == $nornormaEdit->nombre_dependencia){ ?> selected <?php } ?> required ><?php echo $datos->nombre_dependencia;?></option>
-	    <?php
-	    }
-	    ?>  
-	</select> 
-    </div>
-
-<!--------- Lista desplegable clasificacion_normativa  -------------------------->
-
-    <div class="form-group ">
-	<label class="form-control-sm">Tipo Documento</label>
-	<select class="form-control mt-2" name="codigo_clasificacion_normograma" required>
-	    <option value="">- Seleccione Clasificación -</option>
-	    <?php
-	    $busqeda = $db->query("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
-	    $dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
-	    foreach($dependencia as $datos){
-	    ?>
-	    <option value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_clasificacion == $nornormaEdit->nombre_clasificacion){ ?> selected <?php } ?> required  ><?php echo $datos->nombre_clasificacion;?></option>
-	    <?php
-	    }
-	    ?>  
-	</select> 
-    </div>
-
-<!--------- Lista desplegable quien_emite_normativa  -------------------------->
-
-    <div class="form-group ">
-	<label class="form-control-sm">Emisor/Emitido por</label>
-	<select class="form-control mt-2" name="codigo_quien_emite_normativa" required>
-	    <option value="">- Seleccione Emisor -</option>
-	    <?php
-	    $busqeda = $db->query("SELECT * FROM quien_emite_normativa ORDER BY nombre_emisor ASC");
-	    $dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
-	    foreach($dependencia as $datos){
-	    ?>
-	    <option value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_emisor == $nornormaEdit->nombre_emisor){ ?> selected <?php } ?> required  ><?php echo $datos->nombre_emisor;   ?></option>
-	    <?php
-	    }
-	    ?>  
-	</select> 
-    </div>
-
-<!-------- Elemento numero de la Normativa  ------------------------------------->
-
-    <div class="form-group ">
-	<label class="form-control-sm">Número de la Normativa</label>
-	<input class="form-control form-control-sm" type="number" max="100000" name="numero_norma" placeholder="Ingrese el número de la norma." value="<?php if($condicion==2){echo $nornormaEdit->numero_norma;} ?>"  required>
-    </div>
-
-<!-------- Elemento Año de Expedicion  ------------------------------------------>
-
-    <div class="form-group ">
-	<label class="form-control-sm">Año de Expedición</label>
-	<input class="form-control form-control-sm" type="number" max="2030" min="1900" name="anio_expedicion" placeholder="Digite el año en que se expidió la norma." value="<?php if($condicion==2){echo $nornormaEdit->anio_expedicion;} ?>" required>
-    </div>
-
-<!-------- Elemento mes de Expedición  ----------------------------------------->
-
-    <div class="form-group ">
-	<label class="form-control-sm">Mes de Expedición</label>
-	<input class="form-control form-control-sm" type="number" max="12" min="1" name="mes_expedicion" placeholder="Digite el mes en que se expidió la norma." value="<?php if($condicion==2){echo $nornormaEdit->mes_expedicion;} ?>" required>
-    </div>
-
-<!-------- Elemento dia de Expedición  ----------------------------------------->
-
-    <div class="form-group ">
-	<label class="form-control-sm">Día de Expedición</label>
-	<input class="form-control form-control-sm" type="number" max="31" min="1" name="dia_expedicion" placeholder="Digite el día en que se expidió la norma." value="<?php if($condicion==2){echo $nornormaEdit->dia_expedicion;} ?>"  required>
-    </div>
-
-<!-------- Lista desplegable estado_documento  --------------------------------->
-
-    <div class="form-group ">
-	<label class="form-control-sm">Estado</label>
-	<select class="form-control mt-2" name="codigo_estado_documento" required>
-	    <option value="">- Seleccione Estado -</option>
-	    <?php
-	    $busqeda = $db->query("SELECT * FROM estado_documento ORDER BY nombre_estado ASC");
-	    $dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
-	    foreach($dependencia as $datos){
-	    ?>
-	    <option value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_estado == $nornormaEdit->nombre_estado){ ?> selected <?php } ?> required  ><?php echo $datos->nombre_estado;   ?></option>
-	    <?php
-	    }
-	    ?>  
-	</select> 
-    </div>
-
-<!-------- Elemento Asunto  ------------------------------------------------------>
-
-    <div class="form-group ">
-        <label class="form-control-sm">Asunto</label>
-        <textarea class="form-control form-control-sm" type="text" name="asunto" value="" placeholder="Digite un breve resumen de la norma." required><?php if($condicion==2){echo $nornormaEdit->asunto;} ?></textarea>
-    </div>
-
-<!-------- Elemento Palabras Clave   --------------------------------------------->
-        
-    <div class="form-group ">
-        <label class="form-control-sm">Palabras Clave</label>
-        <textarea class="form-control form-control-sm" type="text" pattern="[A-Za-z0-9_-]{1,50}"  name="palabra_clave" value="" placeholder="Digite una serie de palabras clave divididas con coma." required><?php if($condicion==2){echo $nornormaEdit->palabras_claves;} ?></textarea>
-    </div>
-
-<!-------- Elemento Archivo  ------------------------------------------------------>
- 
-    <div>
-	<label>archivo</label>
-	<input class="form-control" type="file" name="archivo_norma"  accept="aplication/PDF, .pdf" <?php if($condicion==1 or $archivoExistente==0){ ?> required <?php } ?>>
-    </div>
-<!---------------------------------------------------------------------------------->
-    <br/>
-
-    <div>
-    <?php // Script Ver archivo guardado
-	if($condicion==2){
-	    $path = "../Archivos/".$nornormaEdit->codigo_gen; //path o ruta donde esta el archivo
-	    //$rutaCompleta= $path;
-	    if(file_exists($path)){
-		$directorioArch = opendir($path);
-
-		while($archivo = readdir($directorioArch)){
-		    if(!is_dir($archivo)){
-			$archivoExistente=1;
-			$rutaCompleta = $archivo;
-			?>
-			<center> Para actualizar el archivo debe eliminar el archivo existente y subir el archivo actualizado, Archivo existente:<br><?php echo $archivo;?>  </br> </br>
-			<a class='btn btn-info' href='verDocumento.php?id=<?php echo $id; ?>' title='Ver archivo adjunto' target='_BLANK'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'>
-			<path d='M23.821,11.181v0C22.943,9.261,19.5,3,12,3S1.057,9.261.179,11.181a1.969,1.969,0,0,0,0,1.64C1.057,14.739,4.5,21,12,21s10.943-6.261,11.821-8.181A1.968,1.968,0,0,0,23.821,11.181ZM12,19c-6.307,0-9.25-5.366-10-6.989C2.75,10.366,5.693,5,12,5c6.292,0,9.236,5.343,10,7C21.236,13.657,18.292,19,12,19Z'/>
-			<path d='M12,7a5,5,0,1,0,5,5A5.006,5.006,0,0,0,12,7Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z'/></svg></a>
-			<a href="del_file.php?ruta=<?php echo $path;?>/<?php echo $archivo; ?>&id=<?php echo $id ;?>" class='btn btn-danger' title='Eliminar archivo adjunto'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3' viewBox='0 0 16 16'>
-			<path d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z'/></svg> </a> </br> </br>
-		<?php }
-		}
-	    }
+<div class="container-fluid mt-3">
+	<div class="row">
+		<div class="col-md-8">
+			<h3>
+				Lista Normativa
+				<button style="background-color: white;" type="button" class="btn btn-light" data-bs-toggle="tooltip" data-bs-placement="top" title="La tabla contiene la lista de normativas institucionales">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+					</svg>
+				</button>
+			</h3>
+			<div class="table-responsive">
+				<table class="table">
+						<thead>
+							<tr style="background-color:#037207; color:#FFFFFF;">
+								<th style=" text-align: center;">Tipo Documento</th>
+								<th style=" text-align: center;">Núm. Norma</th>
+								<th style=" text-align: center;">Fecha Expedición</th>
+				
+								<th style=" text-align: center;">Asunto</th>
+								<th style=" text-align: center;">Estado</th>
+								<th style=" text-align: center;">Ver</th>
+								<th style=" text-align: center;">Editar</th>
+								<th style=" text-align: center;">Eliminar</th>
+							</tr>  
+						</thead>
+						<tbody>
+							<?php
+							foreach($normativa as $datos){
+							?>
+								<tr>
+									<td style=" text-align: center;"><?php echo $datos->nombre_clasificacion; ?></td>
+									<td style=" text-align: center;"><?php echo $datos->numero_norma; ?></td>
+									<td style=" text-align: center;"><?php echo $datos->dia_expedicion."/".$datos->mes_expedicion."/".$datos->anio_expedicion; ?></td>
+									<td style=" text-align: justify;"><p><?php echo limitarAsunto($datos->asunto,170,'...'); ?></p></td>
+									<td style=" text-align: center;"><?php echo $datos->nombre_estado; ?></td>
+									<!-- Elemento/Boton de Ver Documento   ------>
+									<td style="text-align: center;"><a class='btn btn-info' href="verDocumento.php?id=<?php echo $datos->codigo_gen; ?>" title='Ver archivo adjunto' target="_BLANK" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+										<path d="M23.821,11.181v0C22.943,9.261,19.5,3,12,3S1.057,9.261.179,11.181a1.969,1.969,0,0,0,0,1.64C1.057,14.739,4.5,21,12,21s10.943-6.261,11.821-8.181A1.968,1.968,0,0,0,23.821,11.181ZM12,19c-6.307,0-9.25-5.366-10-6.989C2.75,10.366,5.693,5,12,5c6.292,0,9.236,5.343,10,7C21.236,13.657,18.292,19,12,19Z"/>
+										<path d="M12,7a5,5,0,1,0,5,5A5.006,5.006,0,0,0,12,7Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z"/></svg></a></td>
+									<!-- Elemento/Boton de Editar normativa ----->
+									<td style="text-align: center;"><a class="btn btn-warning" href="superUser.php?id=<?php echo $datos->codigo_gen; ?>" title="Editar Normativa"  ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+										<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+										<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg></a>
+									</td>
+									<!-- Elemento/Boton de Eliminar normativa --->
+									<td style="text-align: center;"><a class="btn btn-danger" onclick="AlertEl(<?php echo $datos->codigo_gen; ?>)" title="Eliminar Normativa"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+										<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg></a>
+									</td>
+								</tr>
+							<?php
+							}
+							?> 
+						</tbody>
+				</table>
+			</div>
+			<!-- Paginacion -->
+			<div class="container">
+				<nav aria-label="Paginación Normativas">
+					<ul class="pagination justify-content-center">
+						<?php
+						$totalPaginacion = ceil($totalNormas/$limit);
+						//numero de botones de la paginacion a mostrar
+						$num_pages = 5;
+						// calcular mitad del número de páginas que se van a mostrar
+						$half_num_pages = floor($num_pages / 2);
+						// Calculamos el primer y último número de página que se van a mostrar
+						if ($pag - $half_num_pages > 0) {
+							$start_page = $pag - $half_num_pages;
+						} else {
+							$start_page = 1;
+						}
+						  
+						if ($pag + $half_num_pages < $totalPaginacion) {
+							$end_page = $pag + $half_num_pages;
+						} else {
+							$end_page = $totalPaginacion;
+						}
+						// Imprimimos el botón de "Anterior" si no estamos en la primera página
+						if ($pag > 1) {
+							$atras = $pag-1;
+							echo "
+							<li class='page-item' aria-current='page'>
+								<a class='page-link text-success' href='superUser.php?pag=$atras'>
+								<span aria-hidden='true'>&laquo;</span>
+								</a>
+							</li>";
+						 }
+						// Imprimimos los botones de página
+						for ($i = $start_page; $i <= $end_page; $i++) {
+							// Imprimimos el número de página actual en negrita
+							if ($i == $pag) {
+							echo "
+							<li class='page-item active' aria-current='page'>
+								<a class='page-link text-white'href='superUser.php?pag=$i'>$i</a>
+							</li>";
+							} else {
+							echo "
+							<li class='page-item' aria-current='page'>
+								<a class='page-link text-success' href='superUser.php?pag=$i'>$i</a>	
+							</li>";
+							}
+						}
+				
+						// Imprimimos el botón de "Siguiente" si no estamos en la última página
+						if ($pag < $totalPaginacion) {
+							$siguiente = $pag+1;
+							echo "
+							<li class='page-item' aria-current='page'>
+								<a class='page-link text-success' href='superUser.php?pag=$siguiente'>
+								<span aria-hidden='true'>&raquo;</span>
+								</a>
+							</li>";
+						}
+						?>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="col-md-3 shadow">
+			<hr>
+			<h4><?php if($condicion==1){ ?>Ingreso Nueva Normativa<?php }else{ ?> Editar Normativa <?php } ?></h4>
+			<hr>
+			<form class="form-inline" method="POST" action="<?php if($condicion==1){ ?>insertar.php<?php }else{ ?>editarProceso.php<?php } ?>" enctype="multipart/form-data" >
+				<!--------- Lista desplegable dependencia_normativa  ---------------------------->
+				<div class="form-group "> 
+					<label class="form-control-sm">Dependencia</label>
+					<select class="form-control mt-2" name="codigo_dependencia_normativa" required>
+						<option value="">- Seleccione Dependencia -</option>
+						<?php
+						$busqeda = $db->query("SELECT * FROM dependencia_normativa ORDER BY nombre_dependencia ASC");
+						$dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
+						foreach($dependencia as $datos){
+						?>
+						<option  value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_dependencia == $nornormaEdit->nombre_dependencia){ ?> selected <?php } ?> required ><?php echo $datos->nombre_dependencia;?></option>
+						<?php
+						}
+						?>  
+					</select> 
+				</div>
+		
+				<!--------- Lista desplegable clasificacion_normativa  -------------------------->
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Tipo Documento</label>
+					<select class="form-control mt-2" name="codigo_clasificacion_normograma" required>
+						<option value="">- Seleccione Clasificación -</option>
+						<?php
+						$busqeda = $db->query("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
+						$dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
+						foreach($dependencia as $datos){
+						?>
+						<option value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_clasificacion == $nornormaEdit->nombre_clasificacion){ ?> selected <?php } ?> required  ><?php echo $datos->nombre_clasificacion;?></option>
+						<?php
+						}
+						?>  
+					</select> 
+				</div>
+		
+				<!--------- Lista desplegable quien_emite_normativa  -------------------------->
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Emisor/Emitido por</label>
+					<select class="form-control mt-2" name="codigo_quien_emite_normativa" required>
+						<option value="">- Seleccione Emisor -</option>
+						<?php
+						$busqeda = $db->query("SELECT * FROM quien_emite_normativa ORDER BY nombre_emisor ASC");
+						$dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
+						foreach($dependencia as $datos){
+						?>
+						<option value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_emisor == $nornormaEdit->nombre_emisor){ ?> selected <?php } ?> required  ><?php echo $datos->nombre_emisor;   ?></option>
+						<?php
+						}
+						?>  
+					</select> 
+				</div>
+		
+				<!-------- Elemento numero de la Normativa  ------------------------------------->
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Número de la Normativa</label>
+					<input class="form-control form-control-sm" type="number" max="100000" name="numero_norma" placeholder="Ingrese el número de la norma." value="<?php if($condicion==2){echo $nornormaEdit->numero_norma;} ?>"  required>
+				</div>
+		
+				<!-------- Elemento Año de Expedicion  ------------------------------------------>
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Año de Expedición</label>
+					<input class="form-control form-control-sm" type="number" max="2030" min="1900" name="anio_expedicion" placeholder="Digite el año en que se expidió la norma." value="<?php if($condicion==2){echo $nornormaEdit->anio_expedicion;} ?>" required>
+				</div>
+		
+				<!-------- Elemento mes de Expedición  ----------------------------------------->
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Mes de Expedición</label>
+					<input class="form-control form-control-sm" type="number" max="12" min="1" name="mes_expedicion" placeholder="Digite el mes en que se expidió la norma." value="<?php if($condicion==2){echo $nornormaEdit->mes_expedicion;} ?>" required>
+				</div>
+		
+				<!-------- Elemento dia de Expedición  ----------------------------------------->
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Día de Expedición</label>
+					<input class="form-control form-control-sm" type="number" max="31" min="1" name="dia_expedicion" placeholder="Digite el día en que se expidió la norma." value="<?php if($condicion==2){echo $nornormaEdit->dia_expedicion;} ?>"  required>
+				</div>
+		
+				<!-------- Lista desplegable estado_documento  --------------------------------->
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Estado</label>
+					<select class="form-control mt-2" name="codigo_estado_documento" required>
+						<option value="">- Seleccione Estado -</option>
+						<?php
+						$busqeda = $db->query("SELECT * FROM estado_documento ORDER BY nombre_estado ASC");
+						$dependencia = $busqeda->fetchAll(PDO::FETCH_OBJ);
+						foreach($dependencia as $datos){
+						?>
+						<option value="<?php echo $datos->codigo;?>" <?php if($condicion==2 and $datos->nombre_estado == $nornormaEdit->nombre_estado){ ?> selected <?php } ?> required  ><?php echo $datos->nombre_estado;   ?></option>
+						<?php
+						}
+						?>  
+					</select> 
+				</div>
+		
+				<!-------- Elemento Asunto  ------------------------------------------------------>
+		
+				<div class="form-group ">
+					<label class="form-control-sm">Asunto</label>
+					<textarea class="form-control form-control-sm" type="text" name="asunto" value="" placeholder="Digite un breve resumen de la norma." required><?php if($condicion==2){echo $nornormaEdit->asunto;} ?></textarea>
+				</div>
+		
+				<!-------- Elemento Palabras Clave   --------------------------------------------->
+					
+				<div class="form-group ">
+					<label class="form-control-sm">Palabras Clave</label>
+					<textarea class="form-control form-control-sm" type="text" pattern="[A-Za-z0-9_-]{1,50}"  name="palabra_clave" value="" placeholder="Digite una serie de palabras clave divididas con coma." required><?php if($condicion==2){echo $nornormaEdit->palabras_claves;} ?></textarea>
+				</div>
+		
+				<!-------- Elemento Archivo  ------------------------------------------------------>
 			
-	}    
-    ?>
-    </div>
-
-<!-------- Elementos Ocultos Y Boton de Guardar/ Actualizar  ------------------------->
-
-    <div class="d-grid gap-2 col-6 mx-auto">
-	<input type="hidden" name="oculto" value="<?php if($condicion==1){ echo $contid;}else{ echo $rutaCompleta; } ?>">
-	<?php if($condicion==2){ ?>
-	<input type="hidden" name="id" value="<?php echo $id; ?>">
-	
-	<?php } ?>
-	<input class="btn btn-sm btn-success" type="submit" <?php if($condicion==1){ echo "value='Guardar' onClick='alertGu()'";}else{echo "value='Actualizar'";}?> name="btn_create_normograma" style="background-color:#037207;" >
-    </div>
-    </form>
-	</br>
+				<div>
+					<label>archivo</label>
+					<input class="form-control" type="file" name="archivo_norma"  accept="aplication/PDF, .pdf" <?php if($condicion==1 or $archivoExistente==0){ ?> required <?php } ?>>
+				</div>
+				<!---------------------------------------------------------------------------------->
+				<br/>
+				<div>
+					<?php // Script Ver archivo guardado
+					if($condicion==2){
+						$path = "../Archivos/".$nornormaEdit->codigo_gen; //path o ruta donde esta el archivo
+						//$rutaCompleta= $path;
+						if(file_exists($path)){
+						$directorioArch = opendir($path);
+		
+						while($archivo = readdir($directorioArch)){
+							if(!is_dir($archivo)){
+							$archivoExistente=1;
+							$rutaCompleta = $archivo;
+							?>
+							<center> Para actualizar el archivo debe eliminar el archivo existente y subir el archivo actualizado, Archivo existente:<br><?php echo $archivo;?>  </br> </br>
+							<a class='btn btn-info' href='verDocumento.php?id=<?php echo $id; ?>' title='Ver archivo adjunto' target='_BLANK'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'>
+							<path d='M23.821,11.181v0C22.943,9.261,19.5,3,12,3S1.057,9.261.179,11.181a1.969,1.969,0,0,0,0,1.64C1.057,14.739,4.5,21,12,21s10.943-6.261,11.821-8.181A1.968,1.968,0,0,0,23.821,11.181ZM12,19c-6.307,0-9.25-5.366-10-6.989C2.75,10.366,5.693,5,12,5c6.292,0,9.236,5.343,10,7C21.236,13.657,18.292,19,12,19Z'/>
+							<path d='M12,7a5,5,0,1,0,5,5A5.006,5.006,0,0,0,12,7Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z'/></svg></a>
+							<a href="del_file.php?ruta=<?php echo $path;?>/<?php echo $archivo; ?>&id=<?php echo $id ;?>" class='btn btn-danger' title='Eliminar archivo adjunto'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3' viewBox='0 0 16 16'>
+							<path d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z'/></svg> </a> </br> </br>
+						<?php }
+						}
+						}
+							
+					}    
+					?>
+				</div>
+		
+				<!-------- Elementos Ocultos Y Boton de Guardar/ Actualizar  ------------------------->
+		
+				<input type="hidden" name="oculto" value="<?php if($condicion==1){ echo $contid;}else{ echo $rutaCompleta; } ?>">
+				<?php if($condicion==2){ ?>
+					<input type="hidden" name="id" value="<?php echo $id; ?>">
+				<?php } ?>
+				<div class="d-grid gap-2 col-6 mx-auto mb-3">
+					<input class="btn btn-sm btn-success" type="submit" <?php if($condicion==1){ echo "value='Guardar' onClick='alertGu()'";}else{echo "value='Actualizar'";}?> name="btn_create_normograma" style="background-color:#037207;" >
+				</div>
+			</form>
+		</div>
 	</div>
-
-
-</div>
 </div>
 
 
