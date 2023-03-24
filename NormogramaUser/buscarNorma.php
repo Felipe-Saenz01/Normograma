@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -240,13 +240,13 @@ $totalNormas = $sentenciaTotal->rowCount();
 	    <script>
 		Swal.fire({
 			title: 'Resultado no encontrado!',
-			text: "La norma que desea buscar no existe o no se ha registrado todavía.",
+			text: "Los parametros buscados NO coinciden con alguna norma registrada.",
 			icon: 'info',
 			confirmButtonColor: '#037207',
 			confirmButtonText: 'aceptar'
 		}).then((result) => {
 		    if (result.isConfirmed) {
-			window.location.href = "index_copy.php";
+			window.location.href = "index.php";
 		    }
 		})
 		</script>
@@ -258,87 +258,88 @@ $totalNormas = $sentenciaTotal->rowCount();
 	    <div class="col-12 grid-margin">
 			<div class="card">
 		    	<div class="card-body">
-		    		<h4 class="card-title">Buscador</h4>
-					<!--  Formulario    --->
-		    		<form id="form2" method="POST" action="buscarNorma.php">		
-						<div class="mb-3">
-							<input type="text" class="form-control" id="buscar" name="palabrasClave" placeholder="Ingrese las palabras que desea buscar, separándolas Con una coma." value="<?php if (!empty($_SESSION['palabrasClaves'])){echo $_SESSION['palabrasClaves'];}?>" >
+					<div class="row">
+						<div class="col-md-10">
+							<h4>Filro de Búsqueda</h4>
 						</div>
-
-		    			<h4 class="card-title">Filtro de búsqueda</h4>  
-		    		
-						<table class="table">
-			    		<thead>
-							<tr class="filters">
-				   			<th>
-								<select id="assigned-tutor-filter" id="buscadependencia" name="dependencia" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-					    			<option value="">- Dependencia del documento-</option>
+						<div class="col-md-2">
+							<a href="index.php" class="btn btn-success" style=" background-color: #037207;">Limpiar Busqueda</a>
+						</div>
+					</div>
+					<form method="post" action="buscarNorma.php" class=" pt-0 p-3">
+					<hr>
+					<div class="row">
+						<!-- Filtro Palabras Claves -->
+						<div class="form-group mb-3 col-4">
+							<label for="palabasClave" class="mb-1">Palabras Clave</label>
+							<input type="text" id="buscar" name="palabrasClave" class="form-control"  value="<?php if (!empty($_SESSION['palabrasClaves'])){echo $_SESSION['palabrasClaves'];}?>" placeholder="Ejemplo: Educacion, Estudiante, Reglamento..." style="border: #bababa 1px solid; color:#000000;">
+						</div>
+						<!-- Filtro Select Dependencia -->
+						<div class="form-group mb-3 col-4">
+							<label for="dependencia" class="mb-1">Dependencia</label>
+							<select id="dependencia" name="dependencia" class="form-control" style="border: #bababa 1px solid; color:#000000;" >
+								<option value="">- Seleccione Dependencia -</option>
 									<?php
-									$consulta = $db->prepare("SELECT * FROM dependencia_normativa ORDER BY nombre_dependencia ASC");
-									$consulta->execute();
-									$ejecutar = $consulta->fetchAll(PDO::FETCH_OBJ);
-									foreach ($ejecutar as $datos){ ?> 
-									<option value="<?php  echo $datos->nombre_dependencia ?>" <?php if($datos->nombre_dependencia == $_SESSION['dependencia']){ ?>selected <?php }?> ><?php echo $datos->nombre_dependencia; ?> </option>
-									<?php } ?>
-					    		</select>
-				    		</th>
-
-				    		<th>
-								<select id="assigned-tutor-filter" id="buscaclasificasion" name="clasificacion" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-					    			<option value="">- Tipo de documento -</option>
-					    			<?php 
-					    			$consulta = $db->prepare("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
-									$consulta->execute();
-					    			$ejecutar = $consulta->fetchAll(PDO::FETCH_OBJ);
-									foreach ($ejecutar as $datos){ ?> 
-					    			<option value="<?php  echo $datos->nombre_clasificacion ?>" <?php if($datos->nombre_clasificacion == $_SESSION['clasificacion']){ ?>selected <?php }?>  > <?php  echo $datos->nombre_clasificacion ?></option>
-					    			<?php }?>
-								</select>
-				    		</th>
-
-				    		<th>
-								<select id="assigned-tutor-filter" id="buscaestado" name="estado" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-									<option value="">- Estado del documento -</option>
+										$consulta = $db->prepare("SELECT * FROM dependencia_normativa ORDER BY nombre_dependencia ASC");
+										$consulta->execute();
+										$ejecutar = $consulta->fetchAll(PDO::FETCH_OBJ);
+										foreach ($ejecutar as $datos){ ?> 
+											<option value="<?php  echo $datos->nombre_dependencia ?>" <?php if($datos->nombre_dependencia == $_SESSION['dependencia']){ ?>selected <?php }?> > <?php echo $datos->nombre_dependencia ?> </option>
+										<?php } ?>
+							</select>
+						</div>
+						<!-- Filtro Select Clasificacion -->
+						<div class="form-group mb-3 col-4">
+							<label for="clasificacion" class="mb-1">Clasificación</label>
+							<select  id="clasificacion" name="clasificacion" class="form-control" style="border: #bababa 1px solid; color:#000000;" >
+								<option value="">- Seleccione Tipo de Documento -</option>
 									<?php 
-									$consulta = $db->prepare("SELECT * FROM estado_documento ORDER BY nombre_estado ASC");
-									$consulta->execute();
-									$ejecutar = $consulta->fetchAll(PDO::FETCH_OBJ);
-									foreach ($ejecutar as $datos){ ?> 
-									<option value="<?php  echo $datos->nombre_estado ?>" <?php if($datos->nombre_estado == $_SESSION['estado']){ ?>selected <?php }?>  > <?php  echo $datos->nombre_estado ?></option>
-									<?php } ?>
-								</select>
-				    		</th>
-
-				    		<th>
-								<input class="form-control form-control" type="number" max="2040" min="1900" name="anio" value="<?php if(!empty($_SESSION['anio'])){echo $_SESSION['anio'];} ?>"  placeholder="Año expedición " >
-				    		</th>
-							</tr>
-			    		</thead>
-						</table>
-		    	
-
-						<h4 class="card-title">Ordenar por:</h4>
-						<table class="table">
-							<thead>
-								<tr class="filters">
-									<th>
-										<select id="assigned-tutor-filter" id="orden" name="orden" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-											<option value="">- SELECCIONE UN ORDEN -</option>
-											<option value="4">AÑO</option>
-											<option value="2">DEPENDENCIA</option>
-											<option value="5">ESTADO</option>
-											<option value="3">TIPO DE DOCUMENTO</option>
-										</select>
-									</th>
-
-									<th>
-										<input type="submit" class="btn " value="Buscar" style="margin-top: 38px; background-color: #037207; color: white;">
-										
-									</th>
-								</tr>
-							</thead>
-						</table>
-					</form>
+										$consulta = $db->prepare("SELECT * FROM clasificacion_normativa ORDER BY nombre_clasificacion ASC");
+										$consulta->execute();
+										$ejecutar = $consulta->fetchAll(PDO::FETCH_OBJ);
+										foreach ($ejecutar as $datos){ ?> 
+											<option value="<?php  echo $datos->nombre_clasificacion ?>" <?php if($datos->nombre_clasificacion == $_SESSION['clasificacion']){ ?>selected <?php }?> > <?php  echo $datos->nombre_clasificacion ?></option>
+										<?php }?>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<!-- Filtro Select Estado -->
+						<div class="form-group mb-3 col-4">
+							<label for="estado" class="mb-1">Estado</label>
+							<select  id="estado" name="estado" class="form-control" style="border: #bababa 1px solid; color:#000000;" >
+								<option value="">- Seleccione Estado del Documento -</option>
+									<?php 
+										$consulta = $db->prepare("SELECT * FROM estado_documento ORDER BY nombre_estado ASC");
+										$consulta->execute();
+										$ejecutar = $consulta->fetchAll(PDO::FETCH_OBJ);
+										foreach ($ejecutar as $datos){ ?> 
+											<option value="<?php  echo $datos->nombre_estado ?>" <?php if($datos->nombre_estado == $_SESSION['estado']){ ?>selected <?php }?> > <?php  echo $datos->nombre_estado ?></option>
+										<?php } ?>
+							</select>
+						</div>
+						<!-- Filtro Select Orden -->
+						<div class="form-group mb-3 col-4">
+							<label for="orden" class="mb-1">Orden Búsqueda</label>
+							<select id="orden" name="orden" class="form-control" style="border: #bababa 1px solid; color:#000000;" >
+								<option value="">- Seleccione un Orden -</option>
+								<option value="4">AÑO</option>
+								<option value="2">DEPENDENCIA</option>
+								<option value="5">ESTADO</option>
+								<option value="3">TIPO DE DOCUMENTO</option>
+							</select>
+						</div>
+						<!-- Filtro Año expedición -->
+						<div class="form-group mb-3 col-3">
+							<label for="clasificacion" class="mb-1">Año de Expedición</label>
+							<input class="form-control form-control" type="number" max="2050" min="1900" name="anio"  placeholder="Ejemplo: <?php echo date("Y"); ?> " value="<?php if(!empty($_SESSION['anio'])){echo $_SESSION['anio'];} ?>" >
+						</div>
+						<div class="col-md-1 mt-4">
+							<input type="submit" class="btn text-white " value="Buscar" style=" background-color: #037207;">
+							<input type="hidden" name="oculto">
+						</div>
+					</div>
+				</form>
 					
 				<p style="font-weight: bold; color:#037207;"><i class="mdi mdi-file-document"></i> <?php echo $totalNormas; ?> Resultados encontrados</p>
 		    	
@@ -399,23 +400,71 @@ $totalNormas = $sentenciaTotal->rowCount();
 
 
 
-<div>
-	<center>
-		<nav aria-label="Paginación Normativas">
-			<ul class="pagination">
-			  <?php
-			  $totalPaginacion = ceil($totalNormas/$limit);
-			  for($i=1;$i<=$totalPaginacion; $i++){
-			  ?>	
-			    <li class="page-item" aria-current="page">
-			      <a class="page-link" href="buscarNorma.php?pag=<?php echo $i; ?>"><?php echo $i ?></a>
-			    </li>
-		      <?php } ?>
-		  </ul>
-		</nav>
-	</center>
-</div>
+<!-- Paginacion -->
+</div class="container mt-3" >
+	</br>
+	<nav aria-label="Paginación Normativas">
+	    <ul class="pagination justify-content-center">
+	    <?php
+	    $totalPaginacion = ceil($totalNormas/$limit);
+		//numero de botones de la paginacion a mostrar
+		$num_pages = 5;
+		// calcular mitad del número de páginas que se van a mostrar
+		$half_num_pages = floor($num_pages / 2);
+		// Calculamos el primer y último número de página que se van a mostrar
+		if ($pag - $half_num_pages > 0) {
+			$start_page = $pag - $half_num_pages;
+		} else {
+			$start_page = 1;
+		}
+		  
+		if ($pag + $half_num_pages < $totalPaginacion) {
+			$end_page = $pag + $half_num_pages;
+		} else {
+			$end_page = $totalPaginacion;
+		}
+		// Imprimimos el botón de "Anterior" si no estamos en la primera página
+		if ($pag > 1) {
+			$atras = $pag-1;
+			echo "
+			<li class='page-item' aria-current='page'>
+				<a class='page-link text-success' href='buscarNorma.php?pag=$atras'>
+				<span aria-hidden='true'>&laquo;</span>
+				</a>
+			</li>";
+ 		}
+		// Imprimimos los botones de página
+		for ($i = $start_page; $i <= $end_page; $i++) {
+			// Imprimimos el número de página actual en negrita
+			if ($i == $pag) {
+			echo "
+			<li class='page-item active' aria-current='page'>
+				<a class='page-link text-white'href='buscarNorma.php?pag=$i'>$i</a>
+			</li>";
+			} else {
+			echo "
+			<li class='page-item' aria-current='page'>
+				<a class='page-link text-success' href='buscarNorma.php?pag=$i'>$i</a>	
+			</li>";
+			}
+		}
 
+		// Imprimimos el botón de "Siguiente" si no estamos en la última página
+		if ($pag < $totalPaginacion) {
+			$siguiente = $pag+1;
+			echo "
+			<li class='page-item' aria-current='page'>
+				<a class='page-link text-success' href='buscarNorma.php?pag=$siguiente'>
+				<span aria-hidden='true'>&raquo;</span>
+				</a>
+			</li>";
+		}
+
+	    ?>
+	    </ul>
+	</nav>
+
+</div>
 
 
 

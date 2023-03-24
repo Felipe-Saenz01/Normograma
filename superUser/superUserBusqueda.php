@@ -495,6 +495,7 @@
 
 	    <?php
 		}
+		}
 	    
 	    ?>
 
@@ -502,23 +503,71 @@
 	    </table>
 	    
 
-</div>
-	    <nav aria-label="Paginación Normativas">
-		<ul class="pagination justify-content-center">
-		    <?php
-		    $totalPaginacion = ceil($totalNormas/$limit);
-		    for($i=1;$i<=$totalPaginacion; $i++){
-		    ?>
-		    <li class="page-item" aria-current="page">
-			<a class="page-link text-success" href="<?php echo "superUserBusqueda.php?tipoDoc=".$tipoDoc."&anio_expedicion=".$anio."&numero_norma=".$numero_norma."&pag=".$i; ?>"><?php echo $i ?></a>
-		    </li>
-		<?php } ?>
-		</ul>
-	    </nav>
+	<!-- Paginacion -->
+	</div class="mt-3" >
+		</br>
+		<nav aria-label="Paginación Normativas">
+			<ul class="pagination justify-content-center">
+			<?php
+			$totalPaginacion = ceil($totalNormas/$limit);
+			//numero de botones de la paginacion a mostrar
+			$num_pages = 5;
+			// calcular mitad del número de páginas que se van a mostrar
+			$half_num_pages = floor($num_pages / 2);
+			// Calculamos el primer y último número de página que se van a mostrar
+			if ($pag - $half_num_pages > 0) {
+				$start_page = $pag - $half_num_pages;
+			} else {
+				$start_page = 1;
+			}
+			
+			if ($pag + $half_num_pages < $totalPaginacion) {
+				$end_page = $pag + $half_num_pages;
+			} else {
+				$end_page = $totalPaginacion;
+			}
+			// Imprimimos el botón de "Anterior" si no estamos en la primera página
+			if ($pag > 1) {
+				$atras = $pag-1;
+				echo "
+				<li class='page-item' aria-current='page'>
+					<a class='page-link text-success' href='superUserBusqueda.php?tipoDoc=".$tipoDoc."&anio_expedicion=".$anio."&numero_norma=".$numero_norma."&pag=$atras'>
+					<span aria-hidden='true'>&laquo;</span>
+					</a>
+				</li>";
+			}
+			// Imprimimos los botones de página
+			for ($i = $start_page; $i <= $end_page; $i++) {
+				// Imprimimos el número de página actual en negrita
+				if ($i == $pag) {
+				echo "
+				<li class='page-item active' aria-current='page'>
+					<a class='page-link text-white'href='superUserBusqueda.php?tipoDoc=".$tipoDoc."&anio_expedicion=".$anio."&numero_norma=".$numero_norma."&pag=$i'>$i</a>
+				</li>";
+				} else {
+				echo "
+				<li class='page-item' aria-current='page'>
+					<a class='page-link text-success' href='superUserBusqueda.php?tipoDoc=".$tipoDoc."&anio_expedicion=".$anio."&numero_norma=".$numero_norma."&pag=$i'>$i</a>	
+				</li>";
+				}
+			}
 
-	    <?php  
-	    }
-	    ?>
+			// Imprimimos el botón de "Siguiente" si no estamos en la última página
+			if ($pag < $totalPaginacion) {
+				$siguiente = $pag+1;
+				echo "
+				<li class='page-item' aria-current='page'>
+					<a class='page-link text-success' href='superUserBusqueda.php?tipoDoc=".$tipoDoc."&anio_expedicion=".$anio."&numero_norma=".$numero_norma."&pag=$siguiente'>
+					<span aria-hidden='true'>&raquo;</span>
+					</a>
+				</li>";
+			}
+
+			?>
+			</ul>
+		</nav>
+
+	</div>
 	    <?php if(count($normativa)==0){ ?>
 	    <script>
 		Swal.fire({
