@@ -92,23 +92,30 @@ if(!empty($_POST)){
   }
   $_SESSION['Sentencia'] = '';
   
-  switch($_POST['orden']){
-    case 2:
-      $_SESSION['orden'] = "nombre_dependencia";
-      break;
-    case 3:
-      $_SESSION['orden'] = "nombre_clasificacion";
-      break;
-    case 4:
-      $_SESSION['orden'] = "anio_expedicion";
-      break;
-    case 5:
-      $_SESSION['orden'] = "nombre_estado"; 
-      break;
-    default:
-      $_SESSION['orden'] = "anio_expedicion";
-      break;
+  if(empty($_POST['orden'])){
+	$_SESSION['ordenValue'] = 0;
+	$_SESSION['orden'] = "anio_expedicion";
+  }else{
+	switch($_POST['orden']){
+	  case 2:
+		$_SESSION['orden'] = "nombre_dependencia";
+		$_SESSION['ordenValue'] = 2;
+		break;
+	  case 3:
+		$_SESSION['orden'] = "nombre_clasificacion";
+		$_SESSION['ordenValue'] = 3;
+		break;
+	  case 4:
+		$_SESSION['orden'] = "anio_expedicion";
+		$_SESSION['ordenValue'] = 4;
+		break;
+	  case 5:
+		$_SESSION['orden'] = "nombre_estado";
+		$_SESSION['ordenValue'] = 5; 
+		break;
+	}
   }
+
 }
 
 
@@ -166,27 +173,32 @@ function sentenciaParametros($dependencia, $clasificacion, $estado, $anio){
     // hay mas de 1 palabra clave
 		if(count($aKeyword)>1){
 			$palabasClaveQuery = "WHERE palabras_claves LIKE '%".$aKeyword[0]."%'";
+			$asuntoQuery = " OR asunto LIKE '%".$aKeyword[0]."%'";
 			for($i = 1; $i < count($aKeyword); $i++) {
 				$palabasClaveQuery .= " OR palabras_claves LIKE '%".$aKeyword[$i]."%'";
+				$asuntoQuery .= " OR asunto LIKE '%".$aKeyword[$i]."%'";
       }
       $query .= $palabasClaveQuery;
+      $query .= $asuntoQuery;
 		}else{ // hay solo 1 palabra clave
 			$palabasClaveQuery = "WHERE palabras_claves LIKE '%".str_replace(',', '', $aKeyword[0])."%'";
+			$asuntoQuery = " OR asunto LIKE '%".str_replace(',', '', $aKeyword[0])."%'";
       $query .= $palabasClaveQuery;
+      $query .= $asuntoQuery;
 		}
     //Se agregan los demas parametros,
     $queryParametros = sentenciaParametros($_SESSION['dependencia'], $_SESSION['clasificacion'], $_SESSION['estado'], $_SESSION['anio']);
     if($queryParametros != 0){
       $query .= "AND ".$queryParametros;
     }
-	 $query .= " ORDER BY :orden ASC";
+	 $query .= " ORDER BY ".$_SESSION['orden']." DESC";
       
   }else{//no se enviaron palabras clave
     $queryParametros = sentenciaParametros($_SESSION['dependencia'], $_SESSION['clasificacion'], $_SESSION['estado'], $_SESSION['anio']);
     if($queryParametros != 0){
       $query .= "AND ".$queryParametros;
     }
-	$query .= " ORDER BY :orden ASC";
+	$query .= " ORDER BY ".$_SESSION['orden']." DESC";
 
   }
 
@@ -205,7 +217,6 @@ $offset=($pag-1)*$limit;
 $newquery = $query." LIMIT $offset, $limit";
 
 $_SESSION['Sentencia'] = $newquery;
-
 $sentencia = $db->prepare($_SESSION['Sentencia']);
 $sentenciaTotal = $db->prepare($query);
 
@@ -226,8 +237,8 @@ if(!empty($_SESSION['anio'])){
 $sentencia->bindParam(':anio_expedicion', $_SESSION['anio'], PDO::PARAM_STR);
 $sentenciaTotal->bindParam(':anio_expedicion', $_SESSION['anio'], PDO::PARAM_STR);
 }
-$sentencia->bindParam(':orden', $_SESSION['orden'], PDO::PARAM_STR);
-$sentenciaTotal->bindParam(':orden', $_SESSION['orden'], PDO::PARAM_STR);
+// $sentencia->bindParam(':orden', $_SESSION['orden'], PDO::PARAM_STR);
+// $sentenciaTotal->bindParam(':orden', $_SESSION['orden'], PDO::PARAM_STR);
 
 //Ejecutar la sentencia
 $sentencia->execute();
@@ -260,7 +271,7 @@ $totalNormas = $sentenciaTotal->rowCount();
 		    	<div class="card-body">
 					<div class="row">
 						<div class="col-md-10">
-							<h4>Filro de Búsqueda</h4>
+							<h4>Filtro de Búsqueda</h4>
 						</div>
 						<div class="col-md-2">
 							<a href="index.php" class="btn btn-success" style=" background-color: #037207;">Limpiar Busqueda</a>
@@ -322,11 +333,11 @@ $totalNormas = $sentenciaTotal->rowCount();
 						<div class="form-group mb-3 col-4">
 							<label for="orden" class="mb-1">Orden Búsqueda</label>
 							<select id="orden" name="orden" class="form-control" style="border: #bababa 1px solid; color:#000000;" >
-								<option value="">- Seleccione un Orden -</option>
-								<option value="4">AÑO</option>
-								<option value="2">DEPENDENCIA</option>
-								<option value="5">ESTADO</option>
-								<option value="3">TIPO DE DOCUMENTO</option>
+								<option value="" <?php if($_SESSION['ordenValue'] == 0){ ?> selected <?php }?>>- Seleccione un Orden -</option>
+								<option value="4" <?php if($_SESSION['ordenValue'] == 4){ ?> selected <?php }?> >AÑO</option>
+								<option value="2" <?php if($_SESSION['ordenValue'] == 2){ ?> selected <?php }?> >DEPENDENCIA</option>
+								<option value="5" <?php if($_SESSION['ordenValue'] == 5){ ?> selected <?php }?> >ESTADO</option>
+								<option value="3" <?php if($_SESSION['ordenValue'] == 3){ ?> selected <?php }?> >TIPO DE DOCUMENTO</option>
 							</select>
 						</div>
 						<!-- Filtro Año expedición -->
@@ -374,11 +385,22 @@ $totalNormas = $sentenciaTotal->rowCount();
 									<td style="text-align: center;"><?php echo $datos["nombre_dependencia"]; ?></td>
 									<td style="text-align: justify;"><?php echo limitarAsunto($datos["asunto"],170,'...'); ?></td>
 									<td style="text-align: center;"><?php echo $datos["nombre_estado"]; ?></td>
-									<td style="text-align: center;"><a class='btn btn-info' href="verDocumento.php?id=<?php echo $datos["codigo_gen"];?>&visita=1" title="Ver Documento" target="_BLANK"  ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
-										<path d="M23.821,11.181v0C22.943,9.261,19.5,3,12,3S1.057,9.261.179,11.181a1.969,1.969,0,0,0,0,1.64C1.057,14.739,4.5,21,12,21s10.943-6.261,11.821-8.181A1.968,1.968,0,0,0,23.821,11.181ZM12,19c-6.307,0-9.25-5.366-10-6.989C2.75,10.366,5.693,5,12,5c6.292,0,9.236,5.343,10,7C21.236,13.657,18.292,19,12,19Z"/>
-										<path d="M12,7a5,5,0,1,0,5,5A5.006,5.006,0,0,0,12,7Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z"/></svg></a>
+									<td style="text-align: center;">
+										<?php 
+											if($datos["nombre_clasificacion"] == 'CONSTITUCIÓN POLÍTICA'){ 
+												echo "
+												<a class='btn btn-light p-0'  style='background-color: #b09a60' href='verDocumento.php?id=".$datos['codigo_gen']."&visita=1' title='Ver Documento' target='_BLANK'  >
+												<img src='./img/Flag_of_Colombia.png' width='45' alt='Bandera de Colombia'>";
+											}else{ ?>
+												<a class='btn btn-light'  style="background-color: #b09a60;" href="verDocumento.php?id=<?php echo $datos["codigo_gen"];?>&visita=1" title="Ver Documento" target="_BLANK"  >
+												<?php
+													include './img/view_icon.svg';
+												?>
+												</a>
+												<?php
+											} ?>
 									</td>
-											</tr>
+								</tr>
 								<?php } 
 								}?>
 								</tbody>

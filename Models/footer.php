@@ -9,9 +9,9 @@
     <a class="linkFooter" href="https://unitropico.edu.co/index.php/unitropico/contactanos" style="font-size: 12px;">Líneas de Contacto</a>
     </p>
     <p style="font-size: 12px;">Ventanilla Única vur@unitropico.edu.co - notificacionesjudiciales@unitropico.edu.co</p>
-    <p style="font-size: 12px;">Derechos Reservados - Unitrópico - Copyright © 2019</p>
+    <p style="font-size: 12px;">Derechos Reservados - Unitrópico - Copyright © 2022</p>
     <p style="font-size: 10px;">
- 		<span>Designed by </span>
-    <a class="linkFooter" style="text-decoration: none" href="https://www.unitropico.edu.co" style="font-size: 12px;">Sistemas de Información.</a> 		
+ 		<span>Desarrollado por </span>
+    <a class="linkFooter" style="text-decoration: none" href="https://github.com/Hashimaker" style="font-size: 12px;">Diego Silva</a> y <a class="linkFooter" style="text-decoration: none" href="https://github.com/Felipe-Saenz01" style="font-size: 12px;">Felipe Saenz</a> 		
   </div>
 </footer>
