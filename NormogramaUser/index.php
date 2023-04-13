@@ -74,7 +74,7 @@ if (isset($_GET['pag'])){
 	$pag = 1;
 }
 
-$limit = 1;
+$limit = 10;
 $offset=($pag-1)*$limit;
 
 
@@ -85,7 +85,7 @@ FROM normativa Nom
 INNER JOIN clasificacion_normativa Clasno ON Nom.codigo_clasificacion_normograma = Clasno.codigo
 INNER JOIN estado_documento Estdoc ON Nom.estado = Estdoc.codigo
 INNER JOIN quien_emite_normativa Emis ON Nom.codigo_quien_emite_normativa = Emis.codigo
-INNER JOIN dependencia_normativa Depen ON Nom.codigo_dependencia_normativa = Depen.codigo ORDER BY anio_expedicion ASC LIMIT $offset, $limit");
+INNER JOIN dependencia_normativa Depen ON Nom.codigo_dependencia_normativa = Depen.codigo ORDER BY anio_expedicion DESC LIMIT $offset, $limit");
 $sentencia->execute();
 $normativa = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
@@ -95,7 +95,7 @@ FROM normativa Nom
 INNER JOIN clasificacion_normativa Clasno ON Nom.codigo_clasificacion_normograma = Clasno.codigo
 INNER JOIN estado_documento Estdoc ON Nom.estado = Estdoc.codigo
 INNER JOIN quien_emite_normativa Emis ON Nom.codigo_quien_emite_normativa = Emis.codigo
-INNER JOIN dependencia_normativa Depen ON Nom.codigo_dependencia_normativa = Depen.codigo ORDER BY anio_expedicion ASC");
+INNER JOIN dependencia_normativa Depen ON Nom.codigo_dependencia_normativa = Depen.codigo ORDER BY anio_expedicion DESC");
 $totalNormas = $sentenciaTotal->rowCount();
 
 	
@@ -115,7 +115,7 @@ $totalNormas = $sentenciaTotal->rowCount();
 		    	<div class="card-body">
 				<form method="post" action="buscarNorma.php" class=" p-3">
 					<div class="row">
-						<h4>Filro de Búsqueda</h4>
+						<h4>Filtro de Búsqueda</h4>
 					</div>
 					<hr>
 					<div class="row">
@@ -223,11 +223,22 @@ $totalNormas = $sentenciaTotal->rowCount();
 									<td style="text-align: center;"><?php echo $datos["nombre_dependencia"]; ?></td>
 									<td style="text-align: justify;"><?php echo limitarAsunto($datos["asunto"],170,'...'); ?></td>
 									<td style="text-align: center;"><?php echo $datos["nombre_estado"]; ?></td>
-									<td style="text-align: center;"><a class='btn btn-info' href="verDocumento.php?id=<?php echo $datos["codigo_gen"];?>&visita=1" title="Ver Documento" target="_BLANK"  ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
-										<path d="M23.821,11.181v0C22.943,9.261,19.5,3,12,3S1.057,9.261.179,11.181a1.969,1.969,0,0,0,0,1.64C1.057,14.739,4.5,21,12,21s10.943-6.261,11.821-8.181A1.968,1.968,0,0,0,23.821,11.181ZM12,19c-6.307,0-9.25-5.366-10-6.989C2.75,10.366,5.693,5,12,5c6.292,0,9.236,5.343,10,7C21.236,13.657,18.292,19,12,19Z"/>
-										<path d="M12,7a5,5,0,1,0,5,5A5.006,5.006,0,0,0,12,7Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z"/></svg></a>
+									<td style="text-align: center;">
+									<?php 
+											if($datos["nombre_clasificacion"] == 'CONSTITUCIÓN POLÍTICA'){ 
+												echo "
+												<a class='btn btn-light p-0'  style='background-color: #b09a60' href='verDocumento.php?id=".$datos['codigo_gen']."&visita=1' title='Ver Documento' target='_BLANK'  >
+												<img src='./img/Flag_of_Colombia.png' width='45' alt='Bandera de Colombia'>";
+											}else{ ?>
+												<a class='btn btn-light'  style="background-color: #b09a60;" href="verDocumento.php?id=<?php echo $datos["codigo_gen"];?>&visita=1" title="Ver Documento" target="_BLANK"  >
+												<?php
+													include './img/view_icon.svg';
+												?>
+												</a>
+												<?php
+											} ?>
 									</td>
-											</tr>
+								</tr>
 								<?php }
 								} ?>
 								</tbody>
